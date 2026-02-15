@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-name: Go
-
-on:
-  push:
-    branches: [ '*' ]
-  pull_request:
-    branches: [ '*' ]
-=======
 name: Go CI Pipeline
 
 on:
@@ -14,62 +5,19 @@ on:
     branches: ['*']
   pull_request:
     branches: ['*']
->>>>>>> 3ec0fcc45b1353a0c45a67e4249a857d83244eb4
 
 jobs:
 
   test:
-<<<<<<< HEAD
-    runs-on: ${{ matrix.os }}
-=======
     name: Test (Go ${{ matrix.go }} - ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
 
->>>>>>> 3ec0fcc45b1353a0c45a67e4249a857d83244eb4
     env:
       HOST: localhost
       PORT: 5432
       USER: root
       PASSWORD: root
       DBNAME: root
-<<<<<<< HEAD
-    strategy:
-      matrix:
-        go_version: ['1.18', '1.17', '>=1.18']
-        os: ['ubuntu-latest', 'ubuntu-18.04']
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: ${{ matrix.go_version }}
-      
-    - name: Build-DB
-      run: docker-compose build
-      
-    - name: Create-DB
-      run: docker-compose up -d
-
-    - name: Test
-      run: go test -v main_test.go 
-      
-  
-  build:
-    needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: ['ubuntu-latest', 'ubuntu-18.04']
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      run: go build -v main.go
-
-  docker:
-    needs: build
-    uses: ./.github/workflows/Docker.yml
-=======
 
     strategy:
       matrix:
@@ -99,35 +47,4 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
-
-      - name: Run Tests
-        run: go test ./...
-
-  build:
-    name: Build & Docker (${{ matrix.os }})
-    needs: test
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: ['ubuntu-latest', 'ubuntu-22.04']
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.20'
-
-      - name: Build Go Application
-        run: go build ./...
-
-      - name: Build Docker Image
-        run: docker build -t curso-ci .
-
-  docker:
-    needs: build
-    uses: ./.github/workflows/Docker.yml
->>>>>>> 3ec0fcc45b1353a0c45a67e4249a857d83244eb4
+git add .github/workflows/go.yml
