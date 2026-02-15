@@ -48,9 +48,6 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - name: Wait for Postgres
-        run: sleep 5
-
       - name: Run Tests
         run: go test ./...
 
@@ -78,6 +75,6 @@ jobs:
       - name: Build Docker Image
         run: docker build -t curso-ci .
 
-      docker: 
-        needs: build 
-        uses: ./.github/workflows/Docker.yml
+  docker:
+    needs: build
+    uses: ./.github/workflows/Docker.yml
