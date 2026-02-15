@@ -77,3 +77,7 @@ jobs:
 
       - name: Build Docker Image
         run: docker build -t curso-ci .
+
+      docker: 
+        needs: build 
+        uses: ./.github/workflows/Docker.yml
