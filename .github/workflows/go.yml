@@ -1,13 +1,12 @@
-name: Go CI Pipeline
+name: Go CI
 
 on:
   push:
-    branches: ['*']
+    branches: ["main"]
   pull_request:
-    branches: ['*']
+    branches: ["main"]
 
 jobs:
-
   test:
     name: Test (Go ${{ matrix.go }} - ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -21,8 +20,8 @@ jobs:
 
     strategy:
       matrix:
-        go: ['1.18', '1.20']
-        os: ['ubuntu-latest', 'ubuntu-22.04']
+        go: ["1.18", "1.20"]
+        os: ["ubuntu-latest", "ubuntu-22.04"]
 
     services:
       postgres:
@@ -52,13 +51,9 @@ jobs:
         run: go test ./...
 
   build:
-    name: Build & Docker (${{ matrix.os }})
+    name: Build
     needs: test
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: ['ubuntu-latest', 'ubuntu-22.04']
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -67,14 +62,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.20'
+          go-version: "1.20"
 
-      - name: Build Go Application
+      - name: Build Application
         run: go build ./...
-
-      - name: Build Docker Image
-        run: docker build -t curso-ci .
-
-  docker:
-    needs: build
-    uses: ./.github/workflows/Docker.yml
