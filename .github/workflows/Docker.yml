@@ -2,12 +2,12 @@ name: Docker CI
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   docker:
     runs-on: ubuntu-latest
-    needs: build
 
     steps:
       - name: Checkout código
@@ -24,3 +24,5 @@ jobs:
 
       - name: Push da imagem
         run: docker push plim7plim/app-go:latest
+
+        
